@@ -1,0 +1,47 @@
+<% include partials/header %>
+<h1>Music-thèque</h1>
+<br>
+<form id="search-form" action="/songs" method="get" class="form-inline">
+  <div class="form-group">
+    <label for="category">Filtrer par : </label>
+    <select class="form-control" name="category">
+      <option value="title">Title</option>
+      <option value="album">Album</option>
+      <option value="artist">Artist</option>
+      <option value="year">Year</option>
+      <option value="bpm">BPM</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" name="keywords" placeholder="Keywords : Beyonce, Gangnam Style...">
+  </div>
+  <button form="search-form" type="submit" class="btn btn-default">Send</button>
+</form>
+<br>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Album</th>
+        <th>Artist</th>
+        <th>Year</th>
+        <th>BPM</th>
+    </tr>
+    <% songs.forEach(function(song) {%>
+        <tr>
+            <td>
+                <a href="/songs/<%=song._id%>"><%=song.title%></a>
+            </td>
+            <td><%=song.album%></td>
+            <td><%=song.artist%></td>
+            <td>
+                <% if (song.year) { %><%=song.year%><% } %>
+            </td>
+            <td>
+                <% if (song.bpm) { %><%=song.bpm%><% } %>
+            </td>
+        </tr>
+    <% }) %>
+</table>
+
+<a href="/songs/add">Ajouter une chanson</a>
+<% include partials/footer %>
