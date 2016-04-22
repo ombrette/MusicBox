@@ -76,6 +76,9 @@ router.post('/:id/rating', function(req, res) {
     // }
     req.body.song_id = req.params.id;
     req.body.user_username = res.locals.user_name;
+    // Normalement on recupere l'information qu'on passe dans le body, on n'est pas censé à la setter !
+    // le but est plutôt que tout soit envoyé depuis le body... c'est une autre approche ce que tu fais, pas mauvaise
+    // mais pas forcément le meilleur choix, j'aurais preferé ce que t'as fait avec addRating mais t'as commenté
 
     RatingService.createRating(req.body)
         .then(function(rating) {
@@ -84,6 +87,7 @@ router.post('/:id/rating', function(req, res) {
             }
             if (req.accepts('application/json')) {
                 return res.status(201).send(song);
+                // song ?? song n'est pas définie, ici tu dois renvoyer le rating !
             }
         })
         .catch(function(err) {
@@ -93,6 +97,7 @@ router.post('/:id/rating', function(req, res) {
 });
 
 router.post('/:id/favorites', function(req, res) {
+    // la logique est bonne, mais j'aurais pas utilisé cette url. Là tu mets à jour l'user, et l'url n'y fait pas reference
     UserService.addFavoritesToUser(req.user._id, req.params.id)
         .then(function(user) {
             req.logIn(user, function(error) {
@@ -102,6 +107,7 @@ router.post('/:id/favorites', function(req, res) {
                     }
                     if (req.accepts('application/json')) {
                         res.status(201).send(user);
+                        // 201 ??? l'objet est a été déjà crée !
                     }
                 }
             });

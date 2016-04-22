@@ -11,19 +11,23 @@
 			        <th>Year</th>
 			        <th>BPM</th>
 			    </tr>
-			    <% top.forEach(function(song) {%>
-			        <tr>
+				<!-- je te mets la correction, t'as mal itéré sur le résultat recuperé -->
+				<% top.forEach(function(rating) {%>
+				    <tr>
 			            <td>
-			                <a href="/songs/<%=song._id%>"><%=song.title%></a>
+			                <a href="/songs/<%=rating.song._id%>"><%=rating.song.title%></a>
 			            </td>
-			            <td><%=song.album%></td>
-			            <td><%=song.artist%></td>
+			            <td><%=rating.song.album%></td>
+			            <td><%=rating.song.artist%></td>
 			            <td>
-			                <% if (song.year) { %><%=song.year%><% } %>
+			                <% if (rating.song.year) { %><%=rating.song.year%><% } %>
 			            </td>
 			            <td>
-			                <% if (song.bpm) { %><%=song.bpm%><% } %>
+			                <% if (rating.song.bpm) { %><%=rating.song.bpm%><% } %>
 			            </td>
+						<td>
+							<%=rating.avgNote%>
+						</td>
 			        </tr>
 			    <% }) %>
 			</table>
